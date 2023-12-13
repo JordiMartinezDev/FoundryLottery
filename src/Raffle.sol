@@ -38,8 +38,8 @@ contract Raffle{
         i_entranceFee = entranceFee;
 
     }
-    function enterRaffle() public{
-
+    function enterRaffle() external payable{
+        require(msg.value >= i_entranceFee, "Not enopugh money");
     }
 
     function pickWinner() public {
