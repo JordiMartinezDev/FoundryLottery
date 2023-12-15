@@ -37,14 +37,24 @@ contract Raffle{
 
     uint private immutable i_entranceFee;
     address payable[] private s_players;
-    
+    uint256 private immutable i_interval;
+    uint256 private s_lastTimeStamp;
+    address private s_recentWinner;
+
     /** Events */
 
     event EnteredRaffle(address indexed player);
 
-    constructor(uint entranceFee){
+    constructor(
+        uint64 subscriptionId,
+        bytes32 gasLane, // keyHash
+        uint256 interval,
+        uint256 entranceFee,
+        uint32 callbackGasLimit
+    ){
         i_entranceFee = entranceFee;
-
+        i_interval = interval;
+        s_lastTimeStamp = block.timestamp;
     }
     function enterRaffle() external payable{
         //require(msg.value >= i_entranceFee, "Not enopugh money");
